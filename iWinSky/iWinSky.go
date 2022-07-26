@@ -3,7 +3,7 @@ package iWinSky
 import (
 	"errors"
 	"fmt"
-	"rta"
+	"github.com/yesgs/rta"
 )
 
 type Request struct {

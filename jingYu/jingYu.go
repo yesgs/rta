@@ -3,8 +3,8 @@ package jingYu
 import (
 	"errors"
 	"fmt"
-	"rta"
-	"rta/util"
+	"github.com/yesgs/rta"
+	"github.com/yesgs/rta/util"
 )
 
 type Request struct {
