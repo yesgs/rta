@@ -1,6 +1,7 @@
 package jingYu
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/yesgs/rta"
@@ -28,6 +29,13 @@ type Response struct {
 
 type Client struct {
 	rta.DefaultRtaClient
+	Channel string
+}
+
+func (c *Client) ConvertRequest(body interface{}) (interface{}, error) {
+	var reqBody = body.(Request)
+	reqBody.Channel = c.Channel
+	return json.Marshal(reqBody)
 }
 
 func (c *Client) ConvertResponse(body []byte, output interface{}) (err error) {
@@ -50,18 +58,18 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 	}
 }
 
-func NewClient(opt *rta.Options) rta.ClientInterface {
+func NewClient(opt *rta.Options, channel string) rta.ClientInterface {
 	opt.Init()
 	return &Client{
 		DefaultRtaClient: rta.DefaultRtaClient{
 			Opts: opt,
 		},
+		Channel: channel,
 	}
 }
 
-func NewPlatformRequest(channel string, platform string, deviceType, deviceId string) Request {
+func NewPlatformRequest(platform string, deviceType, deviceId string) Request {
 	req := Request{
-		Channel:  channel,
 		Platform: platform,
 	}
 	device := RequestDevice{}

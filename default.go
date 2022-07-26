@@ -12,21 +12,21 @@ type DefaultRtaClient struct {
 	Opts *Options
 }
 
-func (t *DefaultRtaClient) GetHttpClient() *http.Client {
-	t.Opts.Mutex.Lock()
-	defer t.Opts.Mutex.Unlock()
-	return t.Opts.HttpClient
+func (c *DefaultRtaClient) GetHttpClient() *http.Client {
+	c.Opts.Mutex.Lock()
+	defer c.Opts.Mutex.Unlock()
+	return c.Opts.HttpClient
 }
 
-func (t *DefaultRtaClient) ConvertRequest(body interface{}) (interface{}, error) {
+func (c *DefaultRtaClient) ConvertRequest(body interface{}) (interface{}, error) {
 	return json.Marshal(body)
 }
 
-func (t *DefaultRtaClient) ResponseHasBusinessError(body interface{}) error {
+func (c *DefaultRtaClient) ResponseHasBusinessError(body interface{}) error {
 	return nil
 }
 
-func (t *DefaultRtaClient) ConvertResponse(body []byte, output interface{}) error {
+func (c *DefaultRtaClient) ConvertResponse(body []byte, output interface{}) error {
 	if output == nil {
 		return errors.New("output is nil")
 	}
@@ -39,14 +39,14 @@ func (t *DefaultRtaClient) ConvertResponse(body []byte, output interface{}) erro
 	return nil
 }
 
-func (t *DefaultRtaClient) Ask(payload interface{}) (data []byte, err error) {
+func (c *DefaultRtaClient) Ask(payload interface{}) (data []byte, err error) {
 	var (
 		req        *http.Request
-		url        = t.Opts.BaseUrl
-		httpClient = t.GetHttpClient()
+		url        = c.Opts.BaseUrl
+		httpClient = c.GetHttpClient()
 	)
 
-	switch t.Opts.HttpMethod {
+	switch c.Opts.HttpMethod {
 	case http.MethodGet:
 		url += "?" + string(payload.([]byte))
 		req, err = http.NewRequest(http.MethodGet, url, nil)

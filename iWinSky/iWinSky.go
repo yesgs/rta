@@ -1,6 +1,7 @@
 package iWinSky
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/yesgs/rta"
@@ -20,6 +21,15 @@ type Response struct {
 
 type Client struct {
 	rta.DefaultRtaClient
+	Token   string
+	Channel string
+}
+
+func (c *Client) ConvertRequest(body interface{}) (interface{}, error) {
+	var reqBody = body.(Request)
+	reqBody.Channel = c.Channel
+	reqBody.Token = c.Token
+	return json.Marshal(reqBody)
 }
 
 func (c *Client) ConvertResponse(body []byte, output interface{}) (err error) {
@@ -42,21 +52,21 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 	}
 }
 
-func NewClient(opt *rta.Options) rta.ClientInterface {
+func NewClient(opt *rta.Options, channel, token string) rta.ClientInterface {
 	opt.Init()
 	return &Client{
 		DefaultRtaClient: rta.DefaultRtaClient{
 			Opts: opt,
 		},
+		Channel: channel,
+		Token:   token,
 	}
 }
 
-func NewPlatformRequest(token string, id string, idKind, channel string) Request {
+func NewPlatformRequest(id, idKind string) Request {
 	req := Request{
-		Token:   token,
-		Id:      id,
-		IdKind:  idKind,
-		Channel: channel,
+		Id:     id,
+		IdKind: idKind,
 	}
 	return req
 }
