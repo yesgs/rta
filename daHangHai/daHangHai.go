@@ -164,9 +164,17 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 	switch body.(type) {
 	case *response.TaobaoUsergrowthDhhDeliveryBatchaskResponse:
 		respStruct := body.(*response.TaobaoUsergrowthDhhDeliveryBatchaskResponse)
-		if respStruct.RequestId == "" || (respStruct.Result.Errcode != nil && *(respStruct.Result.Errcode) != 0) {
-			respStruct.Body = fmt.Sprint(body)
-			err := errors.New(fmt.Sprintf("unknown error: %v", respStruct.Body))
+		if respStruct.RequestId == "" {
+			err := errors.New("RequestId is empty")
+			return err
+		}
+		if respStruct.Result.Errcode == nil {
+			err := errors.New(fmt.Sprintf("RequestId: %v Errcode is nil", respStruct.RequestId))
+			return err
+		}
+
+		if *(respStruct.Result.Errcode) != 0 {
+			err := errors.New(fmt.Sprintf("RequestId: %v Errcode: %v != 0", respStruct.RequestId, *(respStruct.Result.Errcode)))
 			return err
 		}
 		return nil
