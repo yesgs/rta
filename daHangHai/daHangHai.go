@@ -34,7 +34,11 @@ type Client struct {
 
 func (c *Client) Ask(payload interface{}) (data []byte, err error) {
 	var (
+		serverUrl   *url.URL
 		sign        string
+		urlPath     string
+		urlValues   = url.Values{}
+		bodyValues  = url.Values{}
 		publicParam = make(map[string]interface{})
 		payloadMap  = payload.(map[string]interface{})
 	)
@@ -50,22 +54,27 @@ func (c *Client) Ask(payload interface{}) (data []byte, err error) {
 
 	sign = c.getSign(publicParam, payloadMap)
 
-	serverUrl, _ := url.Parse(c.Opts.BaseUrl)
-	urlValues := url.Values{}
+	serverUrl, err = url.Parse(c.Opts.BaseUrl)
+	if err != nil {
+		return nil, err
+	}
 	urlValues.Add("sign", sign)
 	for k, v := range publicParam {
 		urlValues.Add(k, fmt.Sprint(v))
 	}
 	serverUrl.RawQuery = urlValues.Encode()
-	urlPath := serverUrl.String()
+	urlPath = serverUrl.String()
 
-	bodyParam := url.Values{}
 	for k, v := range payloadMap {
-		bodyParam.Add(k, fmt.Sprint(v))
+		bodyValues.Add(k, fmt.Sprint(v))
 	}
 	var httpClient = c.DefaultRtaClient.GetHttpClient()
 
-	req, _ := http.NewRequest(c.Opts.HttpMethod, urlPath, strings.NewReader(bodyParam.Encode()))
+	req, err := http.NewRequest(c.Opts.HttpMethod, urlPath, strings.NewReader(bodyValues.Encode()))
+	if err != nil {
+		return nil, err
+	}
+
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	resp, err := httpClient.Do(req)
 	if err != nil {
