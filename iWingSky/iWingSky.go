@@ -43,7 +43,7 @@ func (c *Client) ConvertResponse(body []byte, output interface{}) (err error) {
 func (c *Client) ResponseHasBusinessError(body interface{}) error {
 	switch body.(type) {
 	case *Response:
-		if body.(*Response).Code > 0 {
+		if body.(*Response).Code > 1 {
 			return errors.New(fmt.Sprintf("code: %v err: %v", body.(*Response).Code, body.(*Response).Message))
 		}
 		return nil
