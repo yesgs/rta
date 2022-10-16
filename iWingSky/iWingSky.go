@@ -63,7 +63,7 @@ func NewClient(opt *rta.Options, channel, token string) rta.ClientInterface {
 	}
 }
 
-func NewPlatformRequest(id, idKind string) Request {
+func NewPlatformRequest(idKind int, id string) Request {
 	req := Request{
 		Id:     id,
 		IdKind: idKind,
