@@ -1,4 +1,4 @@
-package iWinSky
+package iWingSky
 
 import (
 	"encoding/json"
@@ -10,12 +10,12 @@ import (
 type Request struct {
 	Token   string `json:"token"`
 	Id      string `json:"id"`
-	IdKind  string `json:"id_kind"` //1:设备唯一标识 2:设备唯一标识Md5
+	IdKind  int    `json:"id_kind"` //1:设备唯一标识 2:设备唯一标识Md5
 	Channel string `json:"channel"`
 }
 
 type Response struct {
-	Code    int    `json:"code"`
+	Code    int    `json:"code"` //0:不存在 1:已存在 500:异常
 	Message string `json:"message"`
 }
 
