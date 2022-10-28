@@ -162,7 +162,7 @@ func (c *Client) Invoke(method string, payload interface{}) (data []byte, err er
 	return body, nil
 }
 
-func NewClient(opt *rta.Options, appKey, appSecret string) rta.ClientInterface {
+func NewClient(opt *rta.Options, appKey, appSecret string) *Client {
 	opt.Init()
 	return &Client{
 		DefaultRtaClient: rta.DefaultRtaClient{

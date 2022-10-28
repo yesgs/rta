@@ -10,7 +10,11 @@ import (
 )
 
 type Client struct {
-	taobao.Client
+	*taobao.Client
+}
+
+func NewClient(taobaoClient *taobao.Client) *Client {
+	return &Client{taobaoClient}
 }
 
 func (c *Client) Ask(payload interface{}) (data []byte, err error) {
