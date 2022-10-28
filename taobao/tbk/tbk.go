@@ -43,8 +43,8 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 			return err
 		}
 
-		if respStruct.ResultMsg != "成功" {
-			err := errors.New(fmt.Sprintf("RequestId: %v ResultMsg: %v != 0", respStruct.RequestId, respStruct.ResultMsg))
+		if len(*respStruct.Data.ResultList) == 0 {
+			err := errors.New(fmt.Sprintf("RequestId: %v ResultList 为空", respStruct.RequestId))
 			return err
 		}
 		return nil
