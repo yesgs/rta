@@ -43,10 +43,12 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 			return err
 		}
 
-		if len(*respStruct.Data.ResultList) == 0 {
-			err := errors.New(fmt.Sprintf("RequestId: %v ResultList 为空", respStruct.RequestId))
-			return err
-		}
+		//{"data":{"result_list":[]},"request_id":"16mcb0anm8xhi"}
+		//存在 result_list 为空的情况
+		//if len(*respStruct.Data.ResultList) == 0 {
+		//	err := errors.New(fmt.Sprintf("RequestId: %v ResultList 为空", respStruct.RequestId))
+		//	return err
+		//}
 		return nil
 	default:
 		return nil
