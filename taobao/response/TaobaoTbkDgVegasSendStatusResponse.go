@@ -1,7 +1,7 @@
 package response
 
 import (
-	"github.com/yesgs/rta/daHangHai/domain"
+	"github.com/yesgs/rta/taobao/domain"
 )
 
 type TaobaoTbkDgVegasSendStatusResponse struct {

@@ -1,4 +1,4 @@
-package daHangHai
+package dhh
 
 import (
 	"crypto/hmac"
@@ -8,8 +8,9 @@ import (
 	"errors"
 	"fmt"
 	"github.com/yesgs/rta"
-	"github.com/yesgs/rta/daHangHai/request"
-	"github.com/yesgs/rta/daHangHai/response"
+	"github.com/yesgs/rta/taobao"
+	"github.com/yesgs/rta/taobao/request"
+	"github.com/yesgs/rta/taobao/response"
 	"io/ioutil"
 
 	"github.com/yesgs/rta/util"
@@ -156,7 +157,7 @@ func (c *Client) extractContent(content []byte, v interface{}) (err error) {
 			return errors.New("response content too short")
 		} else {
 			if strings.Contains(txtStr[0:20], "error_response") {
-				reqErr := &TopApiRequestError{}
+				reqErr := &taobao.TopApiRequestError{}
 				txtStr = txtStr[18 : len(txtStr)-1]
 				err2 := json.Unmarshal([]byte(txtStr), reqErr)
 				if err2 != nil {
