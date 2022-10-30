@@ -55,8 +55,7 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 	}
 }
 
-func NewPlatformRequest(pid, deviceType, deviceValue string) request.TaobaoTbkDgVegasSendStatusRequest {
-	var bizCode = "1"
+func NewPlatformRequest(pid, deviceType, deviceValue, bizCode string) request.TaobaoTbkDgVegasSendStatusRequest {
 	req := request.TaobaoTbkDgVegasSendStatusRequest{
 		DeviceValue: &deviceValue,
 		DeviceType:  &deviceType,
