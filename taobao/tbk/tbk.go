@@ -56,10 +56,14 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 }
 
 func NewPlatformRequest(pid, deviceType, deviceValue, bizCode string) request.TaobaoTbkDgVegasSendStatusRequest {
+	var thorBizCode *string = nil
+	if len(bizCode) > 0 {
+		thorBizCode = &bizCode
+	}
 	req := request.TaobaoTbkDgVegasSendStatusRequest{
 		DeviceValue: &deviceValue,
 		DeviceType:  &deviceType,
-		ThorBizCode: &bizCode,
+		ThorBizCode: thorBizCode,
 		Pid:         &pid,
 	}
 	return req
