@@ -1,6 +1,8 @@
 package response
 
-import "github.com/yesgs/rta/taobao/domain"
+import (
+	"github.com/yesgs/rta/taobao/domain"
+)
 
 type TaobaoUsergrowthDhhDeliveryBatchaskResponse struct {
 

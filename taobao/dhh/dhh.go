@@ -54,7 +54,7 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 	}
 }
 
-func NewPlatformRequest(adSpaceId, channel string, imei []string, oaid []string, idfa []string) request.TaobaoUsergrowthDhhDeliveryBatchaskRequest {
+func NewPlatformRequest(adSpaceId, channel string, imei []string, oaid []string, idfa []string, caid []string) request.TaobaoUsergrowthDhhDeliveryBatchaskRequest {
 	req := request.TaobaoUsergrowthDhhDeliveryBatchaskRequest{}
 
 	if len(imei) > 0 {
@@ -65,6 +65,9 @@ func NewPlatformRequest(adSpaceId, channel string, imei []string, oaid []string,
 	}
 	if len(idfa) > 0 {
 		req.SetIdfaMd5(strings.Join(idfa, ","))
+	}
+	if len(caid) > 0 {
+		req.SetCaidMd5(strings.Join(caid, ","))
 	}
 
 	req.SetAdvertisingSpaceId(adSpaceId)

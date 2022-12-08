@@ -32,6 +32,9 @@ type TaobaoUsergrowthDhhDeliveryAskRequest struct {
     /*
         渠道标识，在大航海平台申请     */
     Channel  *string `json:"channel" required:"true" `
+    /*
+        md5加密后的caid， 32位小写，前面拼接上caid版本号，当前支持20220111、20211207版本     */
+    CaidMd5  *string `json:"caid_md5,omitempty" required:"false" `
 }
 
 func (s *TaobaoUsergrowthDhhDeliveryAskRequest) SetProfile(v string) *TaobaoUsergrowthDhhDeliveryAskRequest {
@@ -74,6 +77,10 @@ func (s *TaobaoUsergrowthDhhDeliveryAskRequest) SetChannel(v string) *TaobaoUser
     s.Channel = &v
     return s
 }
+func (s *TaobaoUsergrowthDhhDeliveryAskRequest) SetCaidMd5(v string) *TaobaoUsergrowthDhhDeliveryAskRequest {
+    s.CaidMd5 = &v
+    return s
+}
 
 func (req *TaobaoUsergrowthDhhDeliveryAskRequest) ToMap() map[string]interface{} {
     paramMap := make(map[string]interface{})
@@ -106,6 +113,9 @@ func (req *TaobaoUsergrowthDhhDeliveryAskRequest) ToMap() map[string]interface{}
     }
     if(req.Channel != nil) {
         paramMap["channel"] = *req.Channel
+    }
+    if(req.CaidMd5 != nil) {
+        paramMap["caid_md5"] = *req.CaidMd5
     }
     return paramMap
 }
