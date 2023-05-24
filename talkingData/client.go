@@ -7,6 +7,10 @@ import (
 	"github.com/yesgs/rta"
 )
 
+type Client struct {
+	rta.DefaultRtaClient
+}
+
 type Request struct {
 	MediaId      string   `json:"mediaId"`
 	CampaignId   []string `json:"campaignId"`
@@ -30,10 +34,6 @@ type CampaignMatchItem struct {
 type Response struct {
 	Code   int                 `json:"code"`
 	Result []CampaignMatchItem `json:"result"`
-}
-
-type Client struct {
-	rta.DefaultRtaClient
 }
 
 func (c *Client) ConvertRequest(body interface{}) (interface{}, error) {

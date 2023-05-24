@@ -52,6 +52,7 @@ func (c *DefaultRtaClient) Ask(payload interface{}) (data []byte, err error) {
 		req, err = http.NewRequest(http.MethodGet, url, nil)
 	case http.MethodPost:
 		req, err = http.NewRequest(http.MethodPost, url, bytes.NewReader(payload.([]byte)))
+		req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	}
 
 	if err != nil {
