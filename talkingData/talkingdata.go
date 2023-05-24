@@ -61,7 +61,7 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 	}
 }
 
-func NewClient(opt *rta.Options, channel, token string) rta.ClientInterface {
+func NewClient(opt *rta.Options) rta.ClientInterface {
 	opt.Init()
 	return &Client{
 		DefaultRtaClient: rta.DefaultRtaClient{
