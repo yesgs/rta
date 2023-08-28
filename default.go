@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -65,7 +65,7 @@ func (c *DefaultRtaClient) Ask(payload interface{}) (data []byte, err error) {
 	}
 	defer resp.Body.Close()
 
-	data, err = ioutil.ReadAll(resp.Body)
+	data, err = io.ReadAll(resp.Body)
 	return data, err
 }
 
