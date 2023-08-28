@@ -45,10 +45,15 @@ func (c *Client) ConvertRequest(body interface{}) (interface{}, error) {
 }
 
 func (c *Client) ConvertResponse(body []byte, output interface{}) (err error) {
-	err = c.DefaultRtaClient.ConvertResponse(body, output)
-	if err != nil {
-		return err
+	if output == nil {
+		return errors.New("output is nil")
 	}
+
+	err = json.Unmarshal(body, output)
+	if err != nil {
+		return fmt.Errorf("%s %w", string(body), err)
+	}
+
 	return c.ResponseHasBusinessError(output)
 }
 
