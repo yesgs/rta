@@ -89,6 +89,17 @@ func (c *Client) GetPublicParam() map[string]interface{} {
 }
 
 func (c *Client) ExtractContent(content []byte, v interface{}) (err error) {
+	txtStr := string(content)
+	if strings.Contains(txtStr, "error_response") {
+		reqErr := &TopApiRequestError{}
+		txtStr = txtStr[18 : len(txtStr)-1]
+		err2 := json.Unmarshal([]byte(txtStr), reqErr)
+		if err2 != nil {
+			return err2
+		}
+		return fmt.Errorf("%s %v", reqErr.Msg, reqErr.SubMsg)
+	}
+
 	err = json.Unmarshal(content, v)
 	if err == nil {
 		return nil
