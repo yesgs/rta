@@ -1,4 +1,4 @@
-package consumerMatch
+package tbk
 
 import (
 	"crypto/tls"
@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func TestConsumerMatch(t *testing.T) {
+func TestTBK(t *testing.T) {
 	rtaOption := rta.Options{
 		BaseUrl:    "http://gw.api.taobao.com/router/rest",
 		HttpMethod: http.MethodPost,
@@ -33,12 +33,12 @@ func TestConsumerMatch(t *testing.T) {
 		},
 	}
 
-	var adZoneId int64 = 115033550310
+	var activityCategory int64 = 2
 	var deviceType = "OAID"
-	var deviceValue = "94f0580f3a3fbe5f3a3bf5dedcb8574a"
-	var strategyIdList = "87434415627"
+	var deviceValue = "000000e92c9058fc60b9598e32fec98b"
+	var pid = ""
 
-	req := NewPlatformRequest(adZoneId, deviceType, deviceValue, strategyIdList, "")
+	req := NewPlatformRequest(pid, deviceType, deviceValue, activityCategory)
 
 	var appKey = "env(appKey)"
 	var appSecret = "env(appSecret)"
@@ -52,7 +52,7 @@ func TestConsumerMatch(t *testing.T) {
 
 	respBody, err := cli.Ask(reqBody)
 
-	platformResp := response.TaobaoTbkRtaConsumerMatchResponse{}
+	platformResp := response.TaobaoTbkDgVegasSendStatusResponse{}
 
 	err = cli.ConvertResponse(respBody, &platformResp)
 

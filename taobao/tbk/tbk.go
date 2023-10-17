@@ -55,16 +55,12 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 	}
 }
 
-func NewPlatformRequest(pid, deviceType, deviceValue, bizCode string) request.TaobaoTbkDgVegasSendStatusRequest {
-	var thorBizCode *string = nil
-	if len(bizCode) > 0 {
-		thorBizCode = &bizCode
-	}
+func NewPlatformRequest(pid, deviceType, deviceValue string, activityCategory int64) request.TaobaoTbkDgVegasSendStatusRequest {
 	req := request.TaobaoTbkDgVegasSendStatusRequest{
-		DeviceValue: &deviceValue,
-		DeviceType:  &deviceType,
-		ThorBizCode: thorBizCode,
-		Pid:         &pid,
+		DeviceValue:      &deviceValue,
+		DeviceType:       &deviceType,
+		Pid:              &pid,
+		ActivityCategory: &activityCategory,
 	}
 	return req
 }
