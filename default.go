@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -64,6 +65,10 @@ func (c *DefaultRtaClient) Ask(payload interface{}) (data []byte, err error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		return nil, fmt.Errorf("status %v", resp.StatusCode)
+	}
 
 	data, err = io.ReadAll(resp.Body)
 	return data, err
