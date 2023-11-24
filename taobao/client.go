@@ -97,7 +97,7 @@ func (c *Client) ExtractContent(content []byte, v interface{}) (err error) {
 		if err2 != nil {
 			return err2
 		}
-		return fmt.Errorf("%s %v", reqErr.Msg, reqErr.SubMsg)
+		return fmt.Errorf("code: %v msg: %v sub_code: %v sub_msg: %v request_id: %v", reqErr.TopCode, reqErr.Msg, reqErr.SubCode, reqErr.SubMsg, reqErr.RequestId)
 	}
 
 	err = json.Unmarshal(content, v)
