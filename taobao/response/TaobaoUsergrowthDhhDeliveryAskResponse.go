@@ -1,31 +1,19 @@
 package response
 
 type TaobaoUsergrowthDhhDeliveryAskResponse struct {
+	Result    *Result `json:"result"`
+	RequestId string  `json:"request_id"`
+}
 
-    /*
-        System request id
-    */
-    RequestId string `json:"request_id,omitempty" `
+type Result struct {
+	Errcode int          `json:"errcode"`
+	Results []ResultItem `json:"results"`
+}
 
-    /*
-        System body
-    */
-    Body string
-
-    /*
-        在大航海平台可投放的任务ID列表
-    */
-    TaskIdList  []string `json:"task_id_list,omitempty" `
-    /*
-        错误码， 0： 成功；1：限流；2：服务不可用
-    */
-    Errcode  int64 `json:"errcode,omitempty" `
-    /*
-        true: 目标用户；false: 非目标用户
-    */
-    Result  bool `json:"result,omitempty" `
-    /*
-        在大航海平台推荐的任务ID
-    */
-    TaskId  string `json:"task_id,omitempty" `
+type ResultItem struct {
+	OaidMd5    string   `json:"oaid_md5"`
+	IdfaMd5    string   `json:"idfa_md5"`
+	CaidMd5    string   `json:"caid_md5"`
+	ImeiMd5    string   `json:"imei_md5"`
+	TaskIdList []string `json:"task_id_list"`
 }

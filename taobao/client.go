@@ -115,9 +115,9 @@ func (c *Client) ExtractContent(content []byte, v interface{}) (err error) {
 				if err2 != nil {
 					return err2
 				}
-				return err
+				return fmt.Errorf("unknown error %w", err)
 			}
-			return errors.New("unknown error")
+			return err
 		}
 	}
 }
