@@ -34,7 +34,10 @@ func (c *Client) ConvertRequest(body interface{}) (interface{}, error) {
 }
 
 func (c *Client) ConvertResponse(body []byte, output interface{}) (err error) {
-	_ = c.ExtractContent(body, output)
+	err = c.ExtractContent(body, output)
+	if err != nil {
+		return err
+	}
 	return c.ResponseHasBusinessError(output)
 }
 
