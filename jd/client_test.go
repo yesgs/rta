@@ -32,8 +32,8 @@ func Test_f1(t *testing.T) {
 		},
 	}
 
-	var appKey = "aa"
-	var appSecret = "bb"
+	var appKey = "x"
+	var appSecret = "x"
 
 	cli := NewClient(&rtaOption, appKey, appSecret)
 	py := Request{
