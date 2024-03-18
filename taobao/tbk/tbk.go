@@ -36,7 +36,7 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 	case *response.TaobaoTbkDgVegasSendStatusResponse:
 		respStruct := body.(*response.TaobaoTbkDgVegasSendStatusResponse)
 		tmp, _ := json.Marshal(body)
-		fmt.Println(tmp)
+		fmt.Println(string(tmp))
 		if respStruct.RequestId == "" {
 			err := errors.New("RequestId is empty")
 			return err
