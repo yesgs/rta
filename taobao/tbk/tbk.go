@@ -1,7 +1,6 @@
 package tbk
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/yesgs/rta/taobao"
@@ -38,8 +37,6 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 	switch body.(type) {
 	case *response.TaobaoTbkDgVegasSendStatusResponse:
 		respStruct := body.(*response.TaobaoTbkDgVegasSendStatusResponse)
-		tmp, _ := json.Marshal(body)
-		fmt.Println(string(tmp))
 		if respStruct.RequestId == "" {
 			err := errors.New("RequestId is empty")
 			return err
