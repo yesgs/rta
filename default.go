@@ -49,7 +49,14 @@ func (c *DefaultRtaClient) Ask(payload interface{}) (data []byte, err error) {
 
 	switch c.Opts.HttpMethod {
 	case http.MethodGet:
-		url += "?" + string(payload.([]byte))
+		switch payload.(type) {
+		case []byte:
+			url += "?" + string(payload.([]byte))
+		case string:
+			url += "?" + payload.(string)
+		default:
+			url += "?" + ""
+		}
 		req, err = http.NewRequest(http.MethodGet, url, nil)
 	case http.MethodPost:
 		req, err = http.NewRequest(http.MethodPost, url, bytes.NewReader(payload.([]byte)))
