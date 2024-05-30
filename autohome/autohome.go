@@ -39,7 +39,7 @@ type Client struct {
 }
 
 func (c *Client) ConvertRequest(body interface{}) (interface{}, error) {
-	return nil, nil
+	return body, nil
 }
 
 func (c *Client) ConvertResponse(body []byte, output interface{}) (err error) {
