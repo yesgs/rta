@@ -55,21 +55,25 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 func NewPlatformRequest(adSpaceId, channel string, imei string, oaid string, idfa string, caid string) request.TaobaoUsergrowthDhhDeliveryAskRequest {
 	req := request.TaobaoUsergrowthDhhDeliveryAskRequest{}
 
+	req.SetAdvertisingSpaceId(adSpaceId)
+	req.SetChannel(channel)
+
 	if len(imei) > 0 {
 		req.SetImeiMd5(imei)
+		return req
 	}
 	if len(oaid) > 0 {
 		req.SetOaidMd5(oaid)
+		return req
 	}
 	if len(idfa) > 0 {
 		req.SetIdfaMd5(idfa)
+		return req
 	}
 	if len(caid) > 0 {
 		req.SetCaidMd5(caid)
+		return req
 	}
-
-	req.SetAdvertisingSpaceId(adSpaceId)
-	req.SetChannel(channel)
 
 	return req
 }
