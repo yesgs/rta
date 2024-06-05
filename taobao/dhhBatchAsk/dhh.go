@@ -1,4 +1,4 @@
-package dhh
+package dhhBatchAsk
 
 import (
 	"errors"
@@ -22,15 +22,8 @@ func (c *Client) Ask(payload interface{}) (data []byte, err error) {
 }
 
 func (c *Client) ConvertRequest(body interface{}) (interface{}, error) {
-	switch body.(type) {
-	case request.TaobaoUsergrowthDhhDeliveryBatchaskRequest:
-		batchAskRequest := body.(request.TaobaoUsergrowthDhhDeliveryBatchaskRequest)
-		return batchAskRequest.ToMap(), nil
-	case request.TaobaoUsergrowthDhhDeliveryAskRequest:
-		singleAskRequest := body.(request.TaobaoUsergrowthDhhDeliveryAskRequest)
-		return singleAskRequest.ToMap(), nil
-	}
-	return nil, errors.New("unknown")
+	batchAskRequest := body.(request.TaobaoUsergrowthDhhDeliveryBatchaskRequest)
+	return batchAskRequest.ToMap(), nil
 }
 
 func (c *Client) ConvertResponse(body []byte, output interface{}) (err error) {
@@ -83,30 +76,5 @@ func NewPlatformRequest(adSpaceId, channel string, imei []string, oaid []string,
 	req.SetAdvertisingSpaceId(adSpaceId)
 	req.SetChannel(channel)
 
-	return req
-}
-
-func NewPlatformRequestSingleQuery(adSpaceId, channel string, imeiMd5 string, oaidMd5 string, idfaMd5 string, caidMd5 string) request.TaobaoUsergrowthDhhDeliveryAskRequest {
-	req := request.TaobaoUsergrowthDhhDeliveryAskRequest{
-		Profile:            nil,
-		OaidMd5:            nil,
-		IdfaMd5:            nil,
-		ImeiMd5:            nil,
-		AdvertisingSpaceId: &adSpaceId,
-		Channel:            &channel,
-		CaidMd5:            nil,
-	}
-	if len(imeiMd5) > 0 {
-		req.ImeiMd5 = &imeiMd5
-	}
-	if len(oaidMd5) > 0 {
-		req.OaidMd5 = &oaidMd5
-	}
-	if len(idfaMd5) > 0 {
-		req.IdfaMd5 = &idfaMd5
-	}
-	if len(caidMd5) > 0 {
-		req.CaidMd5 = &caidMd5
-	}
 	return req
 }
