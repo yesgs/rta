@@ -10,9 +10,6 @@ import (
 )
 
 type Request struct {
-	Channel string `json:"channel"`
-	Secret  string `json:"secret"`
-
 	OaidMd5   string `json:"oaid_md5"`
 	Caid      string `json:"caid"`
 	Timestamp int64  `json:"timestamp"`
@@ -34,14 +31,18 @@ type Response struct {
 
 type Client struct {
 	rta.DefaultRtaClient
+	Channel string
+	Secret  string
 }
 
-func NewClient(opt *rta.Options) rta.ClientInterface {
+func NewClient(opt *rta.Options, channel string, secret string) rta.ClientInterface {
 	opt.Init()
 	return &Client{
 		DefaultRtaClient: rta.DefaultRtaClient{
 			Opts: opt,
 		},
+		Channel: channel,
+		Secret:  secret,
 	}
 }
 
@@ -78,7 +79,7 @@ func (c *Client) ConvertRequest(body interface{}) (interface{}, error) {
 		uv.Set("caid", reqBody.Caid)
 	}
 
-	sign := Sign(paramMap, reqBody.Secret)
+	sign := Sign(paramMap, c.Secret)
 	uv.Set("sign", sign)
 
 	reqBody.Sign = sign
@@ -105,10 +106,8 @@ func (c *Client) ResponseHasBusinessError(body interface{}) error {
 	}
 }
 
-func NewPlatformRequest(channel string, secret string, oaidMd5 string, caid string) Request {
+func NewPlatformRequest(oaidMd5 string, caid string) Request {
 	req := Request{
-		Channel: channel,
-		Secret:  secret,
 		OaidMd5: oaidMd5,
 		Caid:    caid,
 	}
