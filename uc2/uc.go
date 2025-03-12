@@ -57,8 +57,7 @@ func (c *Client) Execute(req interface{}) ([]byte, error) {
 }
 
 func (c *Client) Ask(payload interface{}) (data []byte, err error) {
-	p2, _ := c.ConvertRequest(payload)
-	return c.Execute(p2)
+	return c.Execute(payload)
 }
 
 func (c *Client) ConvertRequest(body interface{}) (interface{}, error) {
